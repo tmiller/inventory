@@ -1,0 +1,7 @@
+
+{
+  "ServerPort": "8080",
+  "ForemanUsername": "foo",
+  "ForemanPassword": "bar",
+  "ForemanURL": "http://localhost"
+}

@@ -8,9 +8,10 @@ func Test_loadSettings(t *testing.T) {
 		ServerPort:      "8080",
 		ForemanUsername: "foo",
 		ForemanPassword: "bar",
+		ForemanURL:      "http://localhost",
 	}
 
-	actual := loadSettings("./test/good_settings.json")
+	actual := loadSettings("./testdata/good_settings.json")
 
 	if expected.ServerPort != actual.ServerPort {
 		t.Errorf("ServerPort Expected: '%s', Actual:'%s'",
@@ -30,6 +31,13 @@ func Test_loadSettings(t *testing.T) {
 		t.Errorf("ForemanPassword Expected: '%s', Actual:'%s'",
 			expected.ForemanPassword,
 			actual.ForemanPassword,
+		)
+	}
+
+	if expected.ForemanURL != actual.ForemanURL {
+		t.Errorf("ForemanPassword Expected: '%s', Actual:'%s'",
+			expected.ForemanURL,
+			actual.ForemanURL,
 		)
 	}
 }
