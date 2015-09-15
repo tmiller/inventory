@@ -11,7 +11,11 @@ func Test_loadConfig(t *testing.T) {
 		ForemanURL:      "http://localhost",
 	}
 
-	actual := loadConfig("./testdata/good_config.json")
+	actual, err := loadConfig("./testdata/good_config.json")
+
+	if err != nil {
+		t.Error(err)
+	}
 
 	if expected.ServerPort != actual.ServerPort {
 		t.Errorf("ServerPort Expected: '%s', Actual:'%s'",

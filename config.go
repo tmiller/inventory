@@ -14,19 +14,19 @@ type config struct {
 	ForemanPassword string `json:"ForemanPassword"`
 }
 
-func loadConfig(filename string) config {
+func loadConfig(filename string) (config config, err error) {
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
-		log.Println("Error:", err)
+		return
 	}
 
-	var config config
 	err = json.Unmarshal(content, &config)
 	if err != nil {
 		log.Println("Error:", err)
+		return
 	}
 
-	return config
+	return
 }
 
 func (s config) String() string {
