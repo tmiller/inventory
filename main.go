@@ -10,7 +10,7 @@ import (
 	"github.com/tmiller/inventory/assets"
 )
 
-var serverSettings settings
+var serverConfig config
 
 func root_handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<a href='/servers'>Server List</a>")
@@ -23,10 +23,10 @@ func css_handler(w http.ResponseWriter, r *http.Request) {
 
 func server_list_handler(w http.ResponseWriter, r *http.Request) {
 
-	fc := fapi.NewForemanClient(serverSettings.ForemanURL)
+	fc := fapi.NewForemanClient(serverConfig.ForemanURL)
 	fc.SetBasicAuth(
-		serverSettings.ForemanUsername,
-		serverSettings.ForemanPassword,
+		serverConfig.ForemanUsername,
+		serverConfig.ForemanPassword,
 	)
 
 	hosts := fc.Hosts()
@@ -50,20 +50,20 @@ func server_list_handler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func settings_handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, serverSettings.String())
+func config_handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, serverConfig.String())
 }
 
 func main() {
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	serverSettings = loadSettings("settings.json")
+	serverConfig = loadConfig("config.json")
 	http.HandleFunc("/", root_handler)
 	http.HandleFunc("/assets/css/bootstrap.css", css_handler)
 	http.HandleFunc("/servers", server_list_handler)
-	http.HandleFunc("/settings", settings_handler)
+	http.HandleFunc("/config", config_handler)
 
-	address := fmt.Sprintf(":%s", serverSettings.ServerPort)
+	address := fmt.Sprintf(":%s", serverConfig.ServerPort)
 	http.ListenAndServe(address, nil)
 }

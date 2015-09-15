@@ -1,0 +1,6 @@
+{
+  "ServerPort": "80",
+  "ForemanUsername": "millert",
+  "ForemanPassword": "4 bland Cats",
+  "ForemanURL": "http://foreman.advisory.com"
+}

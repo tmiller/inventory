@@ -2,16 +2,16 @@ package main
 
 import "testing"
 
-func Test_loadSettings(t *testing.T) {
+func Test_loadConfig(t *testing.T) {
 
-	expected := settings{
+	expected := config{
 		ServerPort:      "8080",
 		ForemanUsername: "foo",
 		ForemanPassword: "bar",
 		ForemanURL:      "http://localhost",
 	}
 
-	actual := loadSettings("./testdata/good_settings.json")
+	actual := loadConfig("./testdata/good_config.json")
 
 	if expected.ServerPort != actual.ServerPort {
 		t.Errorf("ServerPort Expected: '%s', Actual:'%s'",
