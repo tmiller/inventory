@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/tmiller/fapi"
+	"github.com/tmiller/foreman-go"
 	"github.com/tmiller/inventory/assets"
 )
 
@@ -28,7 +28,7 @@ func css_handler(w http.ResponseWriter, r *http.Request) {
 
 func server_list_handler(w http.ResponseWriter, r *http.Request) {
 
-	fc := fapi.NewForemanClient(serverConfig.ForemanURL)
+	fc := foreman.NewForemanClient(serverConfig.ForemanURL)
 	fc.SetBasicAuth(
 		serverConfig.ForemanUsername,
 		serverConfig.ForemanPassword,
