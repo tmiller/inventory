@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 
@@ -30,16 +31,23 @@ func server_list_handler(w http.ResponseWriter, r *http.Request) {
 
 	hosts := fc.Hosts()
 
-	fmt.Fprintln(w, "<html>")
-	fmt.Fprintln(w, "<head>")
-	fmt.Fprintln(w, "<link rel=\"stylesheet\" href=\"/assets/css/bootstrap.css\"")
-	fmt.Fprintln(w, "</head><body>")
-	fmt.Fprintln(w, "<ul>")
-	for _, host := range hosts {
-		fmt.Fprintf(w, "<li>%s</li>\n", host.Name)
+	tmpl, _ := template.New("layoutStart").Parse(layoutStart)
+	tmpl.New("layoutEnd").Parse(layoutEnd)
+	tmpl.New("serverList").Parse(serverList)
+
+	err := tmpl.ExecuteTemplate(
+		w,
+		"serverList",
+		map[string]interface{}{
+			"Title": "Servers",
+			"Hosts": hosts,
+		},
+	)
+
+	if err != nil {
+		log.Println(err)
 	}
-	fmt.Fprintln(w, "</ul>")
-	fmt.Fprintln(w, "</body></html>")
+
 }
 
 func settings_handler(w http.ResponseWriter, r *http.Request) {
