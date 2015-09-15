@@ -21,7 +21,7 @@ func main() {
 
 	if os.IsNotExist(err) {
 		log.Fatalf("Can't find config file: %s", configFile)
-	} else {
+	} else if err != nil {
 		log.Fatal(err)
 	}
 
